@@ -54,18 +54,21 @@
             // 
             // TaskName
             // 
+            this.TaskName.DataPropertyName = "TaskName";
             this.TaskName.HeaderText = "Task Name";
             this.TaskName.Name = "TaskName";
             this.TaskName.ReadOnly = true;
             // 
             // DailyTime
             // 
+            this.DailyTime.DataPropertyName = "DailyTime";
             this.DailyTime.HeaderText = "Daily Time";
             this.DailyTime.Name = "DailyTime";
             this.DailyTime.ReadOnly = true;
             // 
             // Active
             // 
+            this.Active.DataPropertyName = "Active";
             this.Active.HeaderText = "Active";
             this.Active.Name = "Active";
             this.Active.ReadOnly = true;

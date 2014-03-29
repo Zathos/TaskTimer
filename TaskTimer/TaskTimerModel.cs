@@ -10,18 +10,34 @@ namespace TaskTimer
     {
         public TaskTimerModel(MenuItem taskList)
         {
-            _taskList = taskList;
+            _menuList = taskList;
 
-            var testTask = new TaskItem("task1", (s, e) => TaskClicked(s, e));
-            _taskList.MenuItems.Add(testTask);
+            _taskItems = new Dictionary<string, TaskItem>();
+
+
+            //##########  Testin area
+            const string testName = "task1";
+
+            var testMenuItem = new MenuItem(testName, (s, e) => TaskClicked(s, e));
+            _menuList.MenuItems.Add(testMenuItem);
+
+            var testTaskItem = new TaskItem(testMenuItem);
+            _taskItems[testName] = testTaskItem;
         }
 
         private void TaskClicked(Object sender, System.EventArgs e)
         {
-            var menuItem = sender as TaskItem;
+            var menuItem = sender as MenuItem;
             if (menuItem != null)
             {
+                var taskItem = _taskItems[menuItem.Text];
+                if (taskItem == null)
+                {
+                    return;
+                }
+
                 menuItem.Checked = !menuItem.Checked;
+                taskItem.Active = menuItem.Checked;
             }
         }
 
@@ -30,16 +46,15 @@ namespace TaskTimer
             get 
             {
                 var taskList = new List<TaskItem>();
-                foreach (TaskItem task in _taskList.MenuItems)
+                foreach (KeyValuePair<string, TaskItem> task in _taskItems)
                 {
-                    taskList.Add(task);
+                    taskList.Add(task.Value);
                 }
                 return taskList;
-                //return _taskList.MenuItems; 
             }
         }
 
-        private MenuItem _taskList;
-
+        private MenuItem _menuList;
+        private Dictionary<string, TaskItem> _taskItems;
     }
 }
