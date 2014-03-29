@@ -1,60 +1,104 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using TaskTimer.Properties;
 
 namespace TaskTimer
 {
-    public class TaskTimerModel : ITaskTimerModel
+    public class TaskTimerModel : ITaskTimerModel, IDisposable
     {
-        public TaskTimerModel(MenuItem taskList)
+        public TaskTimerModel()
         {
-            _menuList = taskList;
-
             _taskItems = new Dictionary<string, TaskItem>();
 
+            InitializeNewTrayIcon();
 
             //##########  Testin area
-            const string testName = "task1";
+            const string TestName = "task1";
 
-            var testMenuItem = new MenuItem(testName, (s, e) => TaskClicked(s, e));
-            _menuList.MenuItems.Add(testMenuItem);
+            var testMenuItem = new MenuItem(TestName, TaskClicked);
+            _taskList.MenuItems.Add(testMenuItem);
 
             var testTaskItem = new TaskItem(testMenuItem);
-            _taskItems[testName] = testTaskItem;
-        }
-
-        private void TaskClicked(Object sender, System.EventArgs e)
-        {
-            var menuItem = sender as MenuItem;
-            if (menuItem != null)
-            {
-                var taskItem = _taskItems[menuItem.Text];
-                if (taskItem == null)
-                {
-                    return;
-                }
-
-                menuItem.Checked = !menuItem.Checked;
-                taskItem.Active = menuItem.Checked;
-            }
+            _taskItems[TestName] = testTaskItem;
         }
 
         public IList<TaskItem> TaskItems
         {
-            get 
-            {
-                var taskList = new List<TaskItem>();
-                foreach (KeyValuePair<string, TaskItem> task in _taskItems)
-                {
-                    taskList.Add(task.Value);
-                }
-                return taskList;
-            }
+            get { return _taskItems.Select(task => task.Value).ToList(); }
         }
 
-        private MenuItem _menuList;
-        private Dictionary<string, TaskItem> _taskItems;
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (_trayIcon != null)
+                {
+                    _trayIcon.Dispose();
+                }
+            }
+
+            _isDisposed = true;
+        }
+
+        private void InitializeNewTrayIcon()
+        {
+            _taskList = new MenuItem("Tasks");
+
+            _trayIcon = new NotifyIcon
+                            {
+                                Icon = Resources.TasksIcon,
+                                ContextMenu = new ContextMenu(new[]
+                                                                  {
+                                                                      _taskList,
+                                                                      new MenuItem("-"),
+                                                                      new MenuItem("Manage Tasks", (s, e) => new TaskTimerForm(this).Show()),
+                                                                      new MenuItem("Exit", (s, e) => Application.Exit())
+                                                                  }),
+                                Visible = true
+                            };
+        }
+
+        private void TaskClicked(Object sender, EventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            if (menuItem == null)
+            {
+                return;
+            }
+
+            var taskItem = _taskItems[menuItem.Text];
+            if (taskItem == null)
+            {
+                return;
+            }
+
+            menuItem.Checked = !menuItem.Checked;
+            taskItem.Active = menuItem.Checked;
+        }
+
+        private readonly Dictionary<string, TaskItem> _taskItems;
+        private bool _isDisposed;
+        private MenuItem _taskList;
+        private NotifyIcon _trayIcon;
     }
 }

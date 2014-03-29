@@ -44,8 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TaskItem.cs">
-      <SubType>Component</SubType>
+    <Compile Include="TaskItem.cs" />
+    <Compile Include="UI\TaskEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\TaskEntryForm.Designer.cs">
+      <DependentUpon>TaskEntryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\TaskTimerForm.cs">
       <SubType>Form</SubType>
@@ -67,6 +71,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UI\TaskEntryForm.resx">
+      <DependentUpon>TaskEntryForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\TaskTimerForm.resx">
       <DependentUpon>TaskTimerForm.cs</DependentUpon>
     </EmbeddedResource>
