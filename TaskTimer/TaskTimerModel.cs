@@ -1,32 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
+using TaskTimer.Annotations;
 using TaskTimer.Properties;
 
 namespace TaskTimer
 {
-    public class TaskTimerModel : ITaskTimerModel, IDisposable
+    public class TaskTimerModel : ITaskTimerModel, IDisposable, INotifyPropertyChanged
     {
-        public TaskTimerModel()
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public TaskTimerModel([NotNull] ITaskLogger taskLogger)
         {
-            _taskItems = new Dictionary<string, TaskItem>();
+            _taskLogger = taskLogger;
+            _taskItems = new List<TaskItem>();
 
             InitializeNewTrayIcon();
 
             //##########  Testin area
             const string TestName = "task1";
-
-            var testMenuItem = new MenuItem(TestName, TaskClicked);
-            _taskList.MenuItems.Add(testMenuItem);
-
-            var testTaskItem = new TaskItem(testMenuItem);
-            _taskItems[TestName] = testTaskItem;
+            AddNewTask(TestName);
         }
 
         public IList<TaskItem> TaskItems
         {
-            get { return _taskItems.Select(task => task.Value).ToList(); }
+            get { return _taskItems; }
+        }
+
+        public void AddNewTask(string taskName)
+        {
+            var testMenuItem = new MenuItem(taskName, TaskClicked);
+            _taskList.MenuItems.Add(testMenuItem);
+
+            var testTaskItem = new TaskItem(testMenuItem);
+            _taskItems.Add(testTaskItem);
         }
 
         /// <summary>
@@ -60,6 +69,21 @@ namespace TaskTimer
             _isDisposed = true;
         }
 
+        protected virtual void OnPropertyChanged([CanBeNull] string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        [CanBeNull]
+        private TaskItem GetActiveTask()
+        {
+            return _taskItems.FirstOrDefault(x => x.Active);
+        }
+
         private void InitializeNewTrayIcon()
         {
             _taskList = new MenuItem("Tasks");
@@ -78,25 +102,39 @@ namespace TaskTimer
                             };
         }
 
-        private void TaskClicked(Object sender, EventArgs e)
+        [CanBeNull]
+        private TaskItem LookupTask([NotNull] object sender)
         {
             var menuItem = sender as MenuItem;
-            if (menuItem == null)
-            {
-                return;
-            }
-
-            var taskItem = _taskItems[menuItem.Text];
-            if (taskItem == null)
-            {
-                return;
-            }
-
-            menuItem.Checked = !menuItem.Checked;
-            taskItem.Active = menuItem.Checked;
+            return menuItem == null ? null : _taskItems.FirstOrDefault(x => x.TaskName == menuItem.Text);
         }
 
-        private readonly Dictionary<string, TaskItem> _taskItems;
+        private void TaskClicked([NotNull] Object sender, [CanBeNull] EventArgs e)
+        {
+            var now = DateTime.Now;
+
+            var newActiveTask = LookupTask(sender);
+            if (newActiveTask == null)
+            {
+                return;
+            }
+
+            var activeTask = GetActiveTask();
+            if (activeTask != null)
+            {
+                activeTask.StopTiming(now);
+            }
+
+            if (newActiveTask != activeTask)
+            {
+                newActiveTask.StartTiming(now);
+            }
+
+            OnPropertyChanged("TaskItems");
+        }
+
+        private readonly IList<TaskItem> _taskItems;
+        private readonly ITaskLogger _taskLogger;
         private bool _isDisposed;
         private MenuItem _taskList;
         private NotifyIcon _trayIcon;

@@ -28,18 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskTimerForm));
             this.TaskDataGrid = new System.Windows.Forms.DataGridView();
-            this.TaskName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DailyTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Active = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.AddTaskButton = new System.Windows.Forms.Button();
             this.RemoveTaskButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.taskItemsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.taskTimerModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.TaskName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DailyTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Active = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.TaskDataGrid)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.taskItemsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.taskTimerModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // TaskDataGrid
@@ -58,27 +63,6 @@
             this.TaskDataGrid.ReadOnly = true;
             this.TaskDataGrid.Size = new System.Drawing.Size(371, 265);
             this.TaskDataGrid.TabIndex = 0;
-            // 
-            // TaskName
-            // 
-            this.TaskName.DataPropertyName = "TaskName";
-            this.TaskName.HeaderText = "Task Name";
-            this.TaskName.Name = "TaskName";
-            this.TaskName.ReadOnly = true;
-            // 
-            // DailyTime
-            // 
-            this.DailyTime.DataPropertyName = "DailyTime";
-            this.DailyTime.HeaderText = "Daily Time";
-            this.DailyTime.Name = "DailyTime";
-            this.DailyTime.ReadOnly = true;
-            // 
-            // Active
-            // 
-            this.Active.DataPropertyName = "Active";
-            this.Active.HeaderText = "Active";
-            this.Active.Name = "Active";
-            this.Active.ReadOnly = true;
             // 
             // AddTaskButton
             // 
@@ -119,6 +103,36 @@
             this.panel2.Size = new System.Drawing.Size(371, 265);
             this.panel2.TabIndex = 5;
             // 
+            // taskItemsBindingSource
+            // 
+            this.taskItemsBindingSource.DataMember = "TaskItems";
+            this.taskItemsBindingSource.DataSource = this.taskTimerModelBindingSource;
+            // 
+            // taskTimerModelBindingSource
+            // 
+            this.taskTimerModelBindingSource.DataSource = typeof(TaskTimer.TaskTimerModel);
+            // 
+            // TaskName
+            // 
+            this.TaskName.DataPropertyName = "TaskName";
+            this.TaskName.HeaderText = "Task Name";
+            this.TaskName.Name = "TaskName";
+            this.TaskName.ReadOnly = true;
+            // 
+            // DailyTime
+            // 
+            this.DailyTime.DataPropertyName = "DailyTime";
+            this.DailyTime.HeaderText = "Daily Time";
+            this.DailyTime.Name = "DailyTime";
+            this.DailyTime.ReadOnly = true;
+            // 
+            // Active
+            // 
+            this.Active.DataPropertyName = "Active";
+            this.Active.HeaderText = "Active";
+            this.Active.Name = "Active";
+            this.Active.ReadOnly = true;
+            // 
             // TaskTimerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -132,6 +146,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.TaskDataGrid)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.taskItemsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.taskTimerModelBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -139,13 +155,15 @@
         #endregion
 
         private System.Windows.Forms.DataGridView TaskDataGrid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TaskName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DailyTime;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Active;
         private System.Windows.Forms.Button AddTaskButton;
         private System.Windows.Forms.Button RemoveTaskButton;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.BindingSource taskTimerModelBindingSource;
+        private System.Windows.Forms.BindingSource taskItemsBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TaskName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DailyTime;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Active;
 
     }
 }

@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using TaskTimer.Annotations;
 
 namespace TaskTimer.UI
 {
@@ -17,9 +10,10 @@ namespace TaskTimer.UI
             InitializeComponent();
         }
 
-        public MenuItem TaskName
+        [NotNull]
+        public string TaskName
         {
-            get { return new MenuItem(TaskNameBox.Text); }
+            get { return TaskNameBox.Text; }
         }
     }
 }

@@ -44,7 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Persistent\ITaskLogger.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="TaskItem.cs" />
+    <Compile Include="Persistent\XMLTaskLogger.cs" />
     <Compile Include="UI\TaskEntryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,10 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Properties\DataSources\TaskTimerModel.datasource" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Persistent\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

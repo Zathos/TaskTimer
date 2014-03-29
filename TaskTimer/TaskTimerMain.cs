@@ -12,7 +12,8 @@ namespace TaskTimer
         [STAThread]
         private static void Main()
         {
-            using (new TaskTimerModel())
+            var taskLogger = new XmlTaskLogger();
+            using (new TaskTimerModel(taskLogger))
             {
                 Application.Run();
             }
