@@ -15,9 +15,11 @@ namespace TaskTimer
         public TaskTimerModel([NotNull] ITaskLogger taskLogger)
         {
             _taskLogger = taskLogger;
-            _taskItems = new List<TaskItem>();
+            _taskItems = _taskLogger.LoadTaskList();
 
             InitializeNewTrayIcon();
+
+
 
             //##########  Testin area
             const string TestName = "task1";
@@ -130,10 +132,11 @@ namespace TaskTimer
                 newActiveTask.StartTiming(now);
             }
 
+            _taskLogger.SaveChanges(_taskItems);
             OnPropertyChanged("TaskItems");
         }
 
-        private readonly IList<TaskItem> _taskItems;
+        private IList<TaskItem> _taskItems;
         private readonly ITaskLogger _taskLogger;
         private bool _isDisposed;
         private MenuItem _taskList;
