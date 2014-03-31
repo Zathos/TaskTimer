@@ -13,8 +13,9 @@ namespace TaskTimer
         private static void Main()
         {
             var taskLogger = new XmlTaskLogger();
-            using (new TaskTimerModel(taskLogger))
+            using(var taskManager = new MenuManager())
             {
+                var t = new TaskTimerModel(taskLogger, taskManager);
                 Application.Run();
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using TaskTimer.Annotations;
+using TaskTimer.POCOs;
 
 namespace TaskTimer
 {

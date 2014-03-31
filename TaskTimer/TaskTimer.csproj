@@ -45,8 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Persistent\ITaskLogger.cs" />
+    <Compile Include="POCOs\TaskItem.cs" />
+    <Compile Include="POCOs\TimeFormatter.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="TaskItem.cs" />
+    <Compile Include="MenuManager.cs" />
     <Compile Include="Persistent\XMLTaskLogger.cs" />
     <Compile Include="UI\TaskEntryForm.cs">
       <SubType>Form</SubType>
@@ -83,7 +85,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Properties\DataSources\TaskTimerModel.datasource" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

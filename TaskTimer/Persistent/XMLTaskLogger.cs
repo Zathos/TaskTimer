@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using TaskTimer.Annotations;
+using TaskTimer.POCOs;
 
 namespace TaskTimer
 {
@@ -19,7 +20,6 @@ namespace TaskTimer
             var xmlSerializer = new XmlSerializer(typeof(List<TaskItem>));
             using (TextReader reader = new StreamReader(fileName))
             {
-                //reader.ReadToEnd();
                 var tasks = (List<TaskItem>)xmlSerializer.Deserialize(reader);
                 reader.Close();
                 return tasks;
