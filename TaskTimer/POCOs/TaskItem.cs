@@ -27,8 +27,11 @@ namespace TaskTimer.POCOs
 
         private readonly TimeFormatter _timeFormatter;
 
-        [NonSerialized]
-        public TimeFormatter DailyTime;
+        [NotNull]
+        public string DailyTime {
+            get { return _timeFormatter.ToString(); }
+            set { }
+        }
 
         private int _activeSeconds;
     }

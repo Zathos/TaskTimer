@@ -120,7 +120,7 @@ namespace TaskTimer
             }
 
             var menuItem = sender as MenuItem;
-            if (menuItem != null)
+            if (menuItem != null && _activeMenuItem != menuItem)
             {
                 menuItem.Checked = true;
                 _activeMenuItem = menuItem;

@@ -21,10 +21,6 @@ namespace TaskTimer
 
             _taskItems = _taskLogger.LoadTaskList();
             _menuManager.AddMenuItems(_taskItems);
-
-            //##########  Testin area
-            const string TestName = "task1";
-            AddNewTask(TestName);
         }
 
         public IList<TaskItem> TaskItems
@@ -44,6 +40,7 @@ namespace TaskTimer
                                {
                                    TaskName = taskName,
                                });
+            _taskLogger.SaveChanges(_taskItems);
         }
         
         protected virtual void OnPropertyChanged([CanBeNull] string propertyName)

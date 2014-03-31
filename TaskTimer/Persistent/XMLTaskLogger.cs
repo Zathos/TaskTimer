@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using TaskTimer.Annotations;
 using TaskTimer.POCOs;
@@ -9,18 +10,20 @@ namespace TaskTimer
 {
     public class XmlTaskLogger : ITaskLogger
     {
+        private const string MasterTaskListFile = "MasterTaskList.txt";
+
         public IList<TaskItem> LoadTaskList()
         {
             var fileName = GetTodaysFileName();
             if (!File.Exists(fileName))
             {
-                return new List<TaskItem>();
+                return LoadMasterTaskList();
             }
 
-            var xmlSerializer = new XmlSerializer(typeof(List<TaskItem>));
+            var xmlSerializer = new XmlSerializer(typeof (List<TaskItem>));
             using (TextReader reader = new StreamReader(fileName))
             {
-                var tasks = (List<TaskItem>)xmlSerializer.Deserialize(reader);
+                var tasks = (List<TaskItem>) xmlSerializer.Deserialize(reader);
                 reader.Close();
                 return tasks;
             }
@@ -28,13 +31,47 @@ namespace TaskTimer
 
         public void SaveChanges(IList<TaskItem> taskItems)
         {
+            WriteTaskName(taskItems);
+
             var fileName = GetTodaysFileName();
-            var xmlSerializer = new XmlSerializer(typeof(List<TaskItem>));
+            var xmlSerializer = new XmlSerializer(typeof (List<TaskItem>));
             using (TextWriter writer = new StreamWriter(fileName))
             {
                 xmlSerializer.Serialize(writer, taskItems);
-                writer.Close(); 
+                writer.Close();
             }
+        }
+
+        private void WriteTaskName([NotNull] IEnumerable<TaskItem> taskItems)
+        {
+            string taskNames = taskItems.Aggregate(string.Empty, (current, taskItem) => current + (taskItem.TaskName + ","));
+            taskNames = taskNames.Substring(0, taskNames.Length - 1);
+            using (TextWriter writer = new StreamWriter(MasterTaskListFile))
+            {
+                writer.WriteLine(taskNames);
+            }
+        }
+
+        [NotNull]
+        private static IEnumerable<string> GetTaskNames()
+        {
+            string allTaskNames;
+            using (TextReader reader = new StreamReader(MasterTaskListFile))
+            {
+                allTaskNames = reader.ReadLine();
+                reader.Close();
+            }
+            return allTaskNames.Split(',');
+        }
+
+        [NotNull]
+        private static List<TaskItem> LoadMasterTaskList()
+        {
+            var taskNames = GetTaskNames();
+            return taskNames.Select(taskName => new TaskItem
+                                                    {
+                                                        TaskName = taskName,
+                                                    }).ToList();
         }
 
         [CanBeNull]

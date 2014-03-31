@@ -15,8 +15,8 @@ namespace TaskTimer
             _taskTimer = taskTimer;
             _taskTimer.PropertyChanged += TaskTimerOnPropertyChanged;
 
-            //TaskDataGrid.Resize += OutputList_Resize;
-            //OutputList_Resize(null, null);
+            TaskDataGrid.Resize += OutputList_Resize;
+            OutputList_Resize(null, null);
 
             RefreshDataSource();
         }
@@ -24,12 +24,12 @@ namespace TaskTimer
         private void TaskTimerOnPropertyChanged([CanBeNull] object sender, [NotNull] PropertyChangedEventArgs e)
         {
             RefreshDataSource();
-            TaskDataGrid.Refresh();
         }
 
         private void RefreshDataSource()
         {
             TaskDataGrid.DataSource = _taskTimer.TaskItems;
+            TaskDataGrid.Refresh();
         }
 
         private void AddTaskButton_Click([CanBeNull] object sender, [CanBeNull] EventArgs e)
