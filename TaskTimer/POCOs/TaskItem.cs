@@ -1,5 +1,4 @@
-﻿using System;
-using TaskTimer.Annotations;
+﻿using TaskTimer.Annotations;
 
 namespace TaskTimer.POCOs
 {
@@ -23,16 +22,16 @@ namespace TaskTimer.POCOs
         }
 
         [NotNull]
-        public string TaskName { get; set; }
-
-        private readonly TimeFormatter _timeFormatter;
-
-        [NotNull]
-        public string DailyTime {
+        public string DailyTime
+        {
             get { return _timeFormatter.ToString(); }
             set { }
         }
 
+        [NotNull]
+        public string TaskName { get; set; }
+
+        private readonly TimeFormatter _timeFormatter;
         private int _activeSeconds;
     }
 }

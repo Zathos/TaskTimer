@@ -19,11 +19,20 @@ namespace TaskTimer
             OutputList_Resize(null, null);
 
             RefreshDataSource();
+            _refreshTimer = new Timer
+                                {
+                                    Interval = 1000
+                                };
+            _refreshTimer.Tick += RefreshTimerOnTick;
+            _refreshTimer.Start();
+
+            FormClosing += OnFormClosing;
         }
 
-        private void TaskTimerOnPropertyChanged([CanBeNull] object sender, [NotNull] PropertyChangedEventArgs e)
+        private void CloseAction()
         {
-            RefreshDataSource();
+            _refreshTimer.Stop();
+            _refreshTimer.Dispose();
         }
 
         private void RefreshDataSource()
@@ -42,12 +51,26 @@ namespace TaskTimer
             RefreshDataSource();
         }
 
+        private void OnFormClosing([CanBeNull] object sender, [CanBeNull] FormClosingEventArgs formClosingEventArgs)
+        {
+            CloseAction();
+        }
+
         private void OutputList_Resize([CanBeNull] object sender, [CanBeNull] EventArgs e)
         {
-            const int Adjustment = 15;
-            TaskDataGrid.Columns[0].Width = (TaskDataGrid.Size.Width / 3) - Adjustment;
-            TaskDataGrid.Columns[1].Width = (TaskDataGrid.Size.Width / 3) - Adjustment;
-            TaskDataGrid.Columns[2].Width = (TaskDataGrid.Size.Width / 3) - Adjustment;
+            const int Adjustment = 11;
+            var numberOfColumns = TaskDataGrid.Columns.Count;
+            for (int i = 0; i < numberOfColumns; i++)
+            {
+                TaskDataGrid.Columns[i].Width = (TaskDataGrid.Size.Width / numberOfColumns) - Adjustment;
+            }
+
+
+        }
+
+        private void RefreshTimerOnTick([CanBeNull] object sender, [CanBeNull] EventArgs eventArgs)
+        {
+            RefreshDataSource();
         }
 
         private void RemoveTaskButton_Click([NotNull] object sender, [CanBeNull] EventArgs e)
@@ -56,8 +79,21 @@ namespace TaskTimer
 
             //TODO remove task from list and menu option
             //var selectedRows = TaskDataGrid.SelectedRows;
+
+            //TODO task is removed from Master List
         }
 
+        private void TaskTimerOnPropertyChanged([CanBeNull] object sender, [NotNull] PropertyChangedEventArgs e)
+        {
+            RefreshDataSource();
+        }
+
+        private void closeToolStripMenuItem_Click([CanBeNull] object sender, [CanBeNull] EventArgs e)
+        {
+            Close();
+        }
+
+        private readonly Timer _refreshTimer;
         private readonly ITaskTimerModel _taskTimer;
     }
 }
