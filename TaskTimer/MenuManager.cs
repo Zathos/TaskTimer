@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using TaskTimer.Annotations;
 using TaskTimer.POCOs;
 using TaskTimer.Properties;
+using TaskTimer.UI;
 
 namespace TaskTimer
 {
@@ -29,12 +29,6 @@ namespace TaskTimer
             get { return _activeMenuItem != null ? _activeMenuItem.Text : string.Empty; }
         }
 
-
-        public void Activate([NotNull] string newActiveTask)
-        {
-            _activeMenuItem.Checked = true;
-        }
-
         public void AddMenuItem([NotNull] string taskName)
         {
             var testMenuItem = new MenuItem(taskName, MenuItemClicked);
@@ -47,11 +41,6 @@ namespace TaskTimer
             {
                 AddMenuItem(taskItem.TaskName);
             }
-        }
-
-        public void Deactivate([NotNull] string activeTask)
-        {
-            _activeMenuItem.Checked = false;
         }
 
         /// <summary>
@@ -68,19 +57,20 @@ namespace TaskTimer
             _menuList = new MenuItem("Tasks");
 
             _trayIcon = new NotifyIcon
-                            {
-                                Icon = Resources.TasksIcon,
-                                ContextMenu = new ContextMenu(new[]
-                                                                  {
-                                                                      _menuList,
-                                                                      new MenuItem("-"),
-                                                                      new MenuItem("Manage Tasks", (s, e) => new TaskTimerForm(taskTimerModel).Show()),
-                                                                      new MenuItem("Exit", (s, e) => Application.Exit())
-                                                                  }),
-                                Visible = true
-                            };
+            {
+                Icon = Resources.TasksIcon,
+                Visible = true,
+                ContextMenu = new ContextMenu(new[]
+                {
+                    _menuList,
+                    new MenuItem("-"),
+                    new MenuItem("Manage Tasks", (s, e) => new TaskTimerForm(taskTimerModel).Show()),
+                    new MenuItem("Exit", (s, e) => Application.Exit())
+                }),
+                Text = NoActiveTaskMessage,
+            };
         }
-
+        const string NoActiveTaskMessage = "No Active Task";
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
         /// </summary>
@@ -117,12 +107,23 @@ namespace TaskTimer
             if (_activeMenuItem != null)
             {
                 _activeMenuItem.Checked = false;
+                _trayIcon.Text = NoActiveTaskMessage;
             }
 
             var menuItem = sender as MenuItem;
-            if (menuItem != null && _activeMenuItem != menuItem)
+            if (menuItem == null)
+            {
+                return;
+            }
+
+            if (_activeMenuItem == menuItem)
+            {
+                _activeMenuItem = null;
+            }
+            else
             {
                 menuItem.Checked = true;
+                _trayIcon.Text = menuItem.Text;
                 _activeMenuItem = menuItem;
             }
 

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using TaskTimer.Annotations;
-using TaskTimer.UI;
+using TaskTimer.Properties;
 
-namespace TaskTimer
+namespace TaskTimer.UI
 {
     public partial class TaskTimerForm : Form
     {
@@ -58,11 +57,11 @@ namespace TaskTimer
 
         private void OutputList_Resize([CanBeNull] object sender, [CanBeNull] EventArgs e)
         {
-            const int Adjustment = 11;
+            const int adjustment = 11;
             var numberOfColumns = TaskDataGrid.Columns.Count;
             for (int i = 0; i < numberOfColumns; i++)
             {
-                TaskDataGrid.Columns[i].Width = (TaskDataGrid.Size.Width / numberOfColumns) - Adjustment;
+                TaskDataGrid.Columns[i].Width = (TaskDataGrid.Size.Width / numberOfColumns) - adjustment;
             }
 
 
@@ -70,6 +69,7 @@ namespace TaskTimer
 
         private void RefreshTimerOnTick([CanBeNull] object sender, [CanBeNull] EventArgs eventArgs)
         {
+            //TODO need to accumulate the time before refreshing the data.
             RefreshDataSource();
         }
 

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using TaskTimer.Annotations;
 using TaskTimer.POCOs;
+using TaskTimer.Properties;
 
-namespace TaskTimer
+namespace TaskTimer.Persistent
 {
     public class XmlTaskLogger : ITaskLogger
     {
@@ -56,12 +56,18 @@ namespace TaskTimer
         private static IEnumerable<string> GetTaskNames()
         {
             string allTaskNames;
+            if (!File.Exists(MasterTaskListFile))
+            {
+                var file = File.Create(MasterTaskListFile);
+                file.Close();
+            }
+
             using (TextReader reader = new StreamReader(MasterTaskListFile))
             {
                 allTaskNames = reader.ReadLine();
                 reader.Close();
             }
-            return allTaskNames.Split(',');
+            return allTaskNames != null ? allTaskNames.Split(',') : new string[0];
         }
 
         [NotNull]

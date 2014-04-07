@@ -1,5 +1,3 @@
-using TaskTimer.Annotations;
-
 namespace TaskTimer.POCOs
 {
     public class TimeFormatter

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using TaskTimer.Annotations;
 using TaskTimer.POCOs;
+using TaskTimer.Properties;
 
-namespace TaskTimer
+namespace TaskTimer.Persistent
 {
     public interface ITaskLogger
     {

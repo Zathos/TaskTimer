@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using TaskTimer.Annotations;
+using TaskTimer.Properties;
 
 namespace TaskTimer.UI
 {
