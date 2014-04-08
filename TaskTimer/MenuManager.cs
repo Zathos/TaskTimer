@@ -10,17 +10,11 @@ namespace TaskTimer
 {
     public class MenuManager : INotifyPropertyChanged, IDisposable
     {
+        private const string NoActiveTaskMessage = "No Active Task";
         public event PropertyChangedEventHandler PropertyChanged;
 
         public MenuManager()
         {
-            //TODO need to add another layer to only hold the data.
-            //Load just the data from the XML file.
-            //Then create my menu Items from the loaded list.
-
-            //When createing a new task do the same, create the data object, then the menu item.
-
-            //This class will have the Menu item and a POCO 
         }
 
         [NotNull]
@@ -44,7 +38,7 @@ namespace TaskTimer
         }
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
         {
@@ -57,24 +51,27 @@ namespace TaskTimer
             _menuList = new MenuItem("Tasks");
 
             _trayIcon = new NotifyIcon
-            {
-                Icon = Resources.TasksIcon,
-                Visible = true,
-                ContextMenu = new ContextMenu(new[]
-                {
-                    _menuList,
-                    new MenuItem("-"),
-                    new MenuItem("Manage Tasks", (s, e) => new TaskTimerForm(taskTimerModel).Show()),
-                    new MenuItem("Exit", (s, e) => Application.Exit())
-                }),
-                Text = NoActiveTaskMessage,
-            };
+                            {
+                                Icon = Resources.TasksIcon,
+                                Visible = true,
+                                ContextMenu = new ContextMenu(new[]
+                                                                  {
+                                                                      _menuList,
+                                                                      new MenuItem("-"),
+                                                                      new MenuItem("Manage Tasks", (s, e) => new TaskTimerForm(taskTimerModel).Show()),
+                                                                      new MenuItem("Exit", (s, e) => Application.Exit())
+                                                                  }),
+                                Text = NoActiveTaskMessage,
+                            };
         }
-        const string NoActiveTaskMessage = "No Active Task";
+
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
+        ///     Releases unmanaged and - optionally - managed resources.
         /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        /// <param name="disposing">
+        ///     <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only
+        ///     unmanaged resources.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (_isDisposed)

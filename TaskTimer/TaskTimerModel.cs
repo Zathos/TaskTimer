@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Forms;
 using TaskTimer.Persistent;
 using TaskTimer.POCOs;
 using TaskTimer.Properties;
@@ -11,11 +12,7 @@ namespace TaskTimer
     public class TaskTimerModel : ITaskTimerModel, INotifyPropertyChanged
     {
         private const int InvalidDay = -1;
-        private readonly MenuManager _menuManager;
-        private readonly IList<TaskItem> _taskItems;
-        private readonly ITaskLogger _taskLogger;
-        private int _savedDay = InvalidDay;
-        private DateTime _startTime;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public TaskTimerModel([NotNull] ITaskLogger taskLogger, [NotNull] MenuManager menuManager)
         {
@@ -27,6 +24,8 @@ namespace TaskTimer
 
             _taskItems = _taskLogger.LoadTaskList();
             _menuManager.AddMenuItems(_taskItems);
+
+            Application.ApplicationExit += ApplicationOnApplicationExit;
         }
 
         public bool IsNewDay
@@ -44,8 +43,6 @@ namespace TaskTimer
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public IList<TaskItem> TaskItems
         {
             get { return _taskItems; }
@@ -60,9 +57,9 @@ namespace TaskTimer
 
             _menuManager.AddMenuItem(taskName);
             _taskItems.Add(new TaskItem
-            {
-                TaskName = taskName,
-            });
+                               {
+                                   TaskName = taskName,
+                               });
             _taskLogger.SaveChanges(_taskItems);
         }
 
@@ -87,14 +84,6 @@ namespace TaskTimer
             task.ActivatedCount += 1;
         }
 
-        private void ResetAllActiveSeconds()
-        {
-            foreach (TaskItem task in TaskItems)
-            {
-                task.ActiveSeconds = 0;
-            }
-        }
-
         private void DeactivateTask([NotNull] TaskItem task, DateTime now)
         {
             task.ActiveSeconds += (int) (now - _startTime).TotalSeconds;
@@ -114,20 +103,38 @@ namespace TaskTimer
             return _taskItems.FirstOrDefault(x => x.TaskName == taskName);
         }
 
+        private void ResetAllActiveSeconds()
+        {
+            foreach (TaskItem task in TaskItems)
+            {
+                task.ActiveSeconds = 0;
+            }
+        }
+
+        private void ApplicationOnApplicationExit(object sender, EventArgs eventArgs)
+        {
+            TaskItem activeTask = GetActiveTask();
+            if (activeTask != null)
+            {
+                DeactivateTask(activeTask, DateTime.Now);
+                _taskLogger.SaveChanges(_taskItems);
+            }
+        }
+
         private void MenuManagerOnPropertyChanged([CanBeNull] object sender, [NotNull] PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
                 case "MenuItemClicked":
-                    var now = DateTime.Now;
+                    DateTime now = DateTime.Now;
 
-                    var activeTask = GetActiveTask();
+                    TaskItem activeTask = GetActiveTask();
                     if (activeTask != null)
                     {
                         DeactivateTask(activeTask, now);
                     }
 
-                    var newActiveTask = LookupTask(_menuManager.ClickedMenuItemName);
+                    TaskItem newActiveTask = LookupTask(_menuManager.ClickedMenuItemName);
                     if (newActiveTask != null && newActiveTask != activeTask)
                     {
                         ActivateTask(newActiveTask, now);
@@ -138,5 +145,11 @@ namespace TaskTimer
                     break;
             }
         }
+
+        private readonly MenuManager _menuManager;
+        private readonly IList<TaskItem> _taskItems;
+        private readonly ITaskLogger _taskLogger;
+        private int _savedDay = InvalidDay;
+        private DateTime _startTime;
     }
 }
