@@ -20,7 +20,8 @@ namespace TaskTimer.UI
             RefreshDataSource();
             _refreshTimer = new Timer
                                 {
-                                    Interval = 1000
+                                    //TODO maybe make this a configuration option
+                                    Interval = 10000
                                 };
             _refreshTimer.Tick += RefreshTimerOnTick;
             _refreshTimer.Start();
@@ -70,6 +71,7 @@ namespace TaskTimer.UI
         private void RefreshTimerOnTick([CanBeNull] object sender, [CanBeNull] EventArgs eventArgs)
         {
             //TODO need to accumulate the time before refreshing the data.
+            _taskTimer.AccumulateTimeForActiveTask();
             RefreshDataSource();
         }
 

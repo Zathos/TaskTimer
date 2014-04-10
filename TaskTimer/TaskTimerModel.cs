@@ -63,6 +63,11 @@ namespace TaskTimer
             _taskLogger.SaveChanges(_taskItems);
         }
 
+        public void AccumulateTimeForActiveTask()
+        {
+            AccumulateTime(GetActiveTask(), DateTime.Now);
+        }
+
         protected virtual void OnPropertyChanged([CanBeNull] string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
@@ -86,12 +91,18 @@ namespace TaskTimer
 
         private void DeactivateTask([NotNull] TaskItem task, DateTime now)
         {
-            var totalSeconds = (int)(now - _startTime).TotalSeconds;
+            AccumulateTime(task, now);
+            task.Active = false;
+        }
+
+        private void AccumulateTime(TaskItem task, DateTime now)
+        {
+            var totalSeconds = (int) (now - _startTime).TotalSeconds;
             if (totalSeconds >= 0)
             {
                 task.ActiveSeconds += totalSeconds;
             }
-            task.Active = false;
+            _startTime = now;
         }
 
         [CanBeNull]

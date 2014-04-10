@@ -13,5 +13,6 @@ namespace TaskTimer
         IList<TaskItem> TaskItems { get; }
 
         void AddNewTask([NotNull] string taskName);
+        void AccumulateTimeForActiveTask();
     }
 }
