@@ -48,6 +48,7 @@ namespace TaskTimer.UI
 
             _taskTimer.AddNewTask(newTaskForm.TaskName);
 
+            //TODO why doesn't this actually refresh, it works in other places.
             RefreshDataSource();
         }
 
@@ -97,5 +98,12 @@ namespace TaskTimer.UI
 
         private readonly Timer _refreshTimer;
         private readonly ITaskTimerModel _taskTimer;
+
+        private void weeklyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var reportForm = new ReportForm();
+            reportForm.ShowDialog();
+        }
+
     }
 }

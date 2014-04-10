@@ -29,6 +29,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskTimerForm));
             this.TaskDataGrid = new System.Windows.Forms.DataGridView();
+            this.TaskName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DailyTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Active = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ActiveSeconds = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ActivatedCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AddTaskButton = new System.Windows.Forms.Button();
             this.RemoveTaskButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -38,12 +43,6 @@
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.weeklyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.customToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TaskName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DailyTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Active = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ActiveSeconds = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ActivatedCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.TaskDataGrid)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -63,104 +62,11 @@
             this.ActiveSeconds,
             this.ActivatedCount});
             this.TaskDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TaskDataGrid.Location = new System.Drawing.Point(0, 35);
-            this.TaskDataGrid.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.TaskDataGrid.Location = new System.Drawing.Point(0, 24);
             this.TaskDataGrid.Name = "TaskDataGrid";
             this.TaskDataGrid.ReadOnly = true;
-            this.TaskDataGrid.Size = new System.Drawing.Size(686, 373);
+            this.TaskDataGrid.Size = new System.Drawing.Size(457, 241);
             this.TaskDataGrid.TabIndex = 0;
-            // 
-            // AddTaskButton
-            // 
-            this.AddTaskButton.Location = new System.Drawing.Point(20, 20);
-            this.AddTaskButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.AddTaskButton.Name = "AddTaskButton";
-            this.AddTaskButton.Size = new System.Drawing.Size(128, 35);
-            this.AddTaskButton.TabIndex = 1;
-            this.AddTaskButton.Text = "Add Task";
-            this.AddTaskButton.UseVisualStyleBackColor = true;
-            this.AddTaskButton.Click += new System.EventHandler(this.AddTaskButton_Click);
-            // 
-            // RemoveTaskButton
-            // 
-            this.RemoveTaskButton.Location = new System.Drawing.Point(156, 20);
-            this.RemoveTaskButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.RemoveTaskButton.Name = "RemoveTaskButton";
-            this.RemoveTaskButton.Size = new System.Drawing.Size(128, 35);
-            this.RemoveTaskButton.TabIndex = 2;
-            this.RemoveTaskButton.Text = "Remove Task";
-            this.RemoveTaskButton.UseVisualStyleBackColor = true;
-            this.RemoveTaskButton.Click += new System.EventHandler(this.RemoveTaskButton_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.RemoveTaskButton);
-            this.panel1.Controls.Add(this.AddTaskButton);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 408);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(686, 75);
-            this.panel1.TabIndex = 4;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.TaskDataGrid);
-            this.panel2.Controls.Add(this.menuStrip1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(686, 408);
-            this.panel2.TabIndex = 5;
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.reportToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
-            this.menuStrip1.Size = new System.Drawing.Size(686, 35);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.closeToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(50, 29);
-            this.fileToolStripMenuItem.Text = "&File";
-            // 
-            // closeToolStripMenuItem
-            // 
-            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(127, 30);
-            this.closeToolStripMenuItem.Text = "&Close";
-            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
-            // 
-            // reportToolStripMenuItem
-            // 
-            this.reportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.weeklyToolStripMenuItem,
-            this.customToolStripMenuItem});
-            this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
-            this.reportToolStripMenuItem.Size = new System.Drawing.Size(89, 29);
-            this.reportToolStripMenuItem.Text = "RReport";
-            // 
-            // weeklyToolStripMenuItem
-            // 
-            this.weeklyToolStripMenuItem.Name = "weeklyToolStripMenuItem";
-            this.weeklyToolStripMenuItem.Size = new System.Drawing.Size(146, 30);
-            this.weeklyToolStripMenuItem.Text = "Weekly";
-            // 
-            // customToolStripMenuItem
-            // 
-            this.customToolStripMenuItem.Name = "customToolStripMenuItem";
-            this.customToolStripMenuItem.Size = new System.Drawing.Size(146, 30);
-            this.customToolStripMenuItem.Text = "Custom";
             // 
             // TaskName
             // 
@@ -197,16 +103,96 @@
             this.ActivatedCount.Name = "ActivatedCount";
             this.ActivatedCount.ReadOnly = true;
             // 
+            // AddTaskButton
+            // 
+            this.AddTaskButton.Location = new System.Drawing.Point(13, 13);
+            this.AddTaskButton.Name = "AddTaskButton";
+            this.AddTaskButton.Size = new System.Drawing.Size(85, 23);
+            this.AddTaskButton.TabIndex = 1;
+            this.AddTaskButton.Text = "Add Task";
+            this.AddTaskButton.UseVisualStyleBackColor = true;
+            this.AddTaskButton.Click += new System.EventHandler(this.AddTaskButton_Click);
+            // 
+            // RemoveTaskButton
+            // 
+            this.RemoveTaskButton.Location = new System.Drawing.Point(104, 13);
+            this.RemoveTaskButton.Name = "RemoveTaskButton";
+            this.RemoveTaskButton.Size = new System.Drawing.Size(85, 23);
+            this.RemoveTaskButton.TabIndex = 2;
+            this.RemoveTaskButton.Text = "Remove Task";
+            this.RemoveTaskButton.UseVisualStyleBackColor = true;
+            this.RemoveTaskButton.Click += new System.EventHandler(this.RemoveTaskButton_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.RemoveTaskButton);
+            this.panel1.Controls.Add(this.AddTaskButton);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 265);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(457, 49);
+            this.panel1.TabIndex = 4;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.TaskDataGrid);
+            this.panel2.Controls.Add(this.menuStrip1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(457, 265);
+            this.panel2.TabIndex = 5;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.reportToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(457, 24);
+            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.closeToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.closeToolStripMenuItem.Text = "&Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            // 
+            // reportToolStripMenuItem
+            // 
+            this.reportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.weeklyToolStripMenuItem});
+            this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
+            this.reportToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.reportToolStripMenuItem.Text = "Report";
+            // 
+            // weeklyToolStripMenuItem
+            // 
+            this.weeklyToolStripMenuItem.Name = "weeklyToolStripMenuItem";
+            this.weeklyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.weeklyToolStripMenuItem.Text = "Weekly";
+            this.weeklyToolStripMenuItem.Click += new System.EventHandler(this.weeklyToolStripMenuItem_Click);
+            // 
             // TaskTimerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(686, 483);
+            this.ClientSize = new System.Drawing.Size(457, 314);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "TaskTimerForm";
             this.Text = "Manage Tasks";
             ((System.ComponentModel.ISupportInitialize)(this.TaskDataGrid)).EndInit();
@@ -231,7 +217,6 @@
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem weeklyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem customToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn TaskName;
         private System.Windows.Forms.DataGridViewTextBoxColumn DailyTime;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Active;
