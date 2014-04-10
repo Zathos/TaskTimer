@@ -1,4 +1,5 @@
-﻿using TaskTimer.Properties;
+﻿using System;
+using TaskTimer.Properties;
 
 namespace TaskTimer.POCOs
 {
@@ -12,7 +13,8 @@ namespace TaskTimer.POCOs
             _timeFormatter = new TimeFormatter();
         }
 
-        public bool Active { get; set; }
+        [NonSerialized]
+        public bool Active;
 
         public int ActivatedCount { get; set; }
 

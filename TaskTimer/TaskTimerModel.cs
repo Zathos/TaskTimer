@@ -86,7 +86,11 @@ namespace TaskTimer
 
         private void DeactivateTask([NotNull] TaskItem task, DateTime now)
         {
-            task.ActiveSeconds += (int) (now - _startTime).TotalSeconds;
+            var totalSeconds = (int)(now - _startTime).TotalSeconds;
+            if (totalSeconds >= 0)
+            {
+                task.ActiveSeconds += totalSeconds;
+            }
             task.Active = false;
         }
 
