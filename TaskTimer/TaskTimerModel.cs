@@ -65,7 +65,11 @@ namespace TaskTimer
 
         public void AccumulateTimeForActiveTask()
         {
-            AccumulateTime(GetActiveTask(), DateTime.Now);
+            var activeTask = GetActiveTask();
+            if (activeTask != null)
+            {
+                AccumulateTime(activeTask, DateTime.Now);
+            }
         }
 
         protected virtual void OnPropertyChanged([CanBeNull] string propertyName)
@@ -98,7 +102,7 @@ namespace TaskTimer
         private void AccumulateTime(TaskItem task, DateTime now)
         {
             var totalSeconds = (int) (now - _startTime).TotalSeconds;
-            if (totalSeconds >= 0)
+            if (task != null && totalSeconds >= 0)
             {
                 task.ActiveSeconds += totalSeconds;
             }

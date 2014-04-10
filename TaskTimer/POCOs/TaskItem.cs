@@ -13,8 +13,7 @@ namespace TaskTimer.POCOs
             _timeFormatter = new TimeFormatter();
         }
 
-        [NonSerialized]
-        public bool Active;
+        public bool Active { get; set; }
 
         public int ActivatedCount { get; set; }
 
