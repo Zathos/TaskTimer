@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Persistent\ITaskLogger.cs" />
+    <Compile Include="POCOs\ReportTaskItem.cs" />
     <Compile Include="POCOs\TaskItem.cs" />
     <Compile Include="POCOs\TimeFormatter.cs" />
     <Compile Include="Properties\Annotations.cs" />

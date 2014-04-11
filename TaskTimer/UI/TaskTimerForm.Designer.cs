@@ -43,6 +43,7 @@
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.weeklyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToCsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.TaskDataGrid)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -172,7 +173,8 @@
             // reportToolStripMenuItem
             // 
             this.reportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.weeklyToolStripMenuItem});
+            this.weeklyToolStripMenuItem,
+            this.exportToCsvToolStripMenuItem});
             this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
             this.reportToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.reportToolStripMenuItem.Text = "Report";
@@ -183,6 +185,13 @@
             this.weeklyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.weeklyToolStripMenuItem.Text = "Weekly";
             this.weeklyToolStripMenuItem.Click += new System.EventHandler(this.weeklyToolStripMenuItem_Click);
+            // 
+            // exportToCsvToolStripMenuItem
+            // 
+            this.exportToCsvToolStripMenuItem.Name = "exportToCsvToolStripMenuItem";
+            this.exportToCsvToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportToCsvToolStripMenuItem.Text = "Export To CSV";
+            this.exportToCsvToolStripMenuItem.Click += new System.EventHandler(this.exportToCsvToolStripMenuItem_Click);
             // 
             // TaskTimerForm
             // 
@@ -222,6 +231,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn Active;
         private System.Windows.Forms.DataGridViewTextBoxColumn ActiveSeconds;
         private System.Windows.Forms.DataGridViewTextBoxColumn ActivatedCount;
+        private System.Windows.Forms.ToolStripMenuItem exportToCsvToolStripMenuItem;
 
     }
 }

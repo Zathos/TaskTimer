@@ -12,6 +12,16 @@ namespace TaskTimer.Persistent
     {
         private const string MasterTaskListFile = "MasterTaskList.txt";
 
+        public IList<ReportTaskItem> LoadAllTasks()
+        {
+            var fileNames = Directory.EnumerateFiles(".", "*.xml");
+            return (from fileName in fileNames
+                    let tasks = LoadTaskListByFileName(fileName)
+                    let date = fileName.Split('.')[0]
+                    select new ReportTaskItem(date, tasks))
+                .ToList();
+        }
+
         public IList<TaskItem> LoadTaskList()
         {
             var fileName = GetTodaysFileName();
@@ -20,13 +30,7 @@ namespace TaskTimer.Persistent
                 return LoadMasterTaskList();
             }
 
-            var xmlSerializer = new XmlSerializer(typeof (List<TaskItem>));
-            using (TextReader reader = new StreamReader(fileName))
-            {
-                var tasks = (List<TaskItem>) xmlSerializer.Deserialize(reader);
-                reader.Close();
-                return tasks;
-            }
+            return LoadTaskListByFileName(fileName);
         }
 
         public void SaveChanges(IList<TaskItem> taskItems)
@@ -39,16 +43,6 @@ namespace TaskTimer.Persistent
             {
                 xmlSerializer.Serialize(writer, taskItems);
                 writer.Close();
-            }
-        }
-
-        private void WriteTaskName([NotNull] IEnumerable<TaskItem> taskItems)
-        {
-            string taskNames = taskItems.Aggregate(string.Empty, (current, taskItem) => current + (taskItem.TaskName + ","));
-            taskNames = taskNames.Substring(0, taskNames.Length - 1);
-            using (TextWriter writer = new StreamWriter(MasterTaskListFile))
-            {
-                writer.WriteLine(taskNames);
             }
         }
 
@@ -80,10 +74,31 @@ namespace TaskTimer.Persistent
                                                     }).ToList();
         }
 
+        private static IList<TaskItem> LoadTaskListByFileName(string fileName)
+        {
+            var xmlSerializer = new XmlSerializer(typeof (List<TaskItem>));
+            using (TextReader reader = new StreamReader(fileName))
+            {
+                var tasks = (List<TaskItem>) xmlSerializer.Deserialize(reader);
+                reader.Close();
+                return tasks;
+            }
+        }
+
         [CanBeNull]
         private string GetTodaysFileName()
         {
             return string.Format("{0}.TaskLog.xml", DateTime.Now.ToString("yyyy-MM-dd"));
+        }
+
+        private void WriteTaskName([NotNull] IEnumerable<TaskItem> taskItems)
+        {
+            string taskNames = taskItems.Aggregate(string.Empty, (current, taskItem) => current + (taskItem.TaskName + ","));
+            taskNames = taskNames.Substring(0, taskNames.Length - 1);
+            using (TextWriter writer = new StreamWriter(MasterTaskListFile))
+            {
+                writer.WriteLine(taskNames);
+            }
         }
     }
 }

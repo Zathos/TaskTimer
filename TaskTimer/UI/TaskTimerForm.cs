@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using TaskTimer.Persistent;
+using TaskTimer.POCOs;
 using TaskTimer.Properties;
 
 namespace TaskTimer.UI
@@ -59,11 +61,11 @@ namespace TaskTimer.UI
 
         private void OutputList_Resize([CanBeNull] object sender, [CanBeNull] EventArgs e)
         {
-            const int adjustment = 11;
+            const int Adjustment = 11;
             var numberOfColumns = TaskDataGrid.Columns.Count;
             for (int i = 0; i < numberOfColumns; i++)
             {
-                TaskDataGrid.Columns[i].Width = (TaskDataGrid.Size.Width / numberOfColumns) - adjustment;
+                TaskDataGrid.Columns[i].Width = (TaskDataGrid.Size.Width / numberOfColumns) - Adjustment;
             }
 
 
@@ -103,6 +105,26 @@ namespace TaskTimer.UI
         {
             var reportForm = new ReportForm();
             reportForm.ShowDialog();
+        }
+
+        private void exportToCsvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //load all XML files
+            var xmlLoader = new XmlTaskLogger();
+            var reportItems = xmlLoader.LoadAllTasks();
+
+            //create 2D CSV file
+            foreach (ReportTaskItem reportItem in reportItems)
+            {
+                
+            }
+
+            //save the data from the file to a class that makes sense.
+
+            //for each file (date)
+
+
+
         }
 
     }
