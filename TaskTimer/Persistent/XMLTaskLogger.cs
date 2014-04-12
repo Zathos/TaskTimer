@@ -15,11 +15,14 @@ namespace TaskTimer.Persistent
         public IList<ReportTaskItem> LoadAllTasks()
         {
             var fileNames = Directory.EnumerateFiles(".", "*.xml");
-            return (from fileName in fileNames
-                    let tasks = LoadTaskListByFileName(fileName)
-                    let date = fileName.Split('.')[0]
-                    select new ReportTaskItem(date, tasks))
-                .ToList();
+            List<ReportTaskItem> list = new List<ReportTaskItem>();
+            foreach (string fileName in fileNames)
+            {
+                IList<TaskItem> tasks = LoadTaskListByFileName(fileName);
+                string date = fileName.Split('.')[1].Substring(1);
+                list.Add(new ReportTaskItem(date, tasks));
+            }
+            return list;
         }
 
         public IList<TaskItem> LoadTaskList()

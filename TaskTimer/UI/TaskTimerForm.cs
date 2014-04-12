@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using TaskTimer.Persistent;
 using TaskTimer.POCOs;
@@ -109,23 +112,40 @@ namespace TaskTimer.UI
 
         private void exportToCsvToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //load all XML files
             var xmlLoader = new XmlTaskLogger();
-            var reportItems = xmlLoader.LoadAllTasks();
+            IList<ReportTaskItem> reportItems = xmlLoader.LoadAllTasks();
 
-            //create 2D CSV file
+            const string Seperator = ",";
+            var finalCsv = string.Empty;
             foreach (ReportTaskItem reportItem in reportItems)
             {
+                var csvHeader = string.Empty;
+                var csvTasks = string.Empty;
+
+                csvHeader += "Date" + Seperator;
+                csvTasks += reportItem.Date + Seperator;
                 
+                foreach (TaskItem item in reportItem.TaskItems)
+                {
+                    csvHeader += item.TaskName + Seperator;
+                    csvTasks += item.DailyTime + Seperator;
+                }
+                csvHeader += "\n";
+                csvTasks += "\n";
+
+                finalCsv += csvHeader + csvTasks + "\n";
             }
 
-            //save the data from the file to a class that makes sense.
+            const string ReportallCsvFileName = "ReportAll.csv";
+            if (File.Exists(ReportallCsvFileName))
+            {
+                File.Delete(ReportallCsvFileName);
+            }
 
-            //for each file (date)
-
-
-
+            using (var file = new StreamWriter(ReportallCsvFileName))
+            {
+                file.WriteLine(finalCsv);
+            }
         }
-
     }
 }
