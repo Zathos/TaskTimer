@@ -196,45 +196,6 @@ namespace TaskTimer.UI
             //MessageBox.Show("Done generating report.", "Done", MessageBoxButtons.OK);
         }
 
-        private void FirstPassexportToCsvToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var xmlLoader = new XmlTaskLogger();
-            IList<ReportTaskItem> reportItems = xmlLoader.LoadAllTasks();
-
-            const string Seperator = ",";
-            var finalCsv = string.Empty;
-            foreach (ReportTaskItem reportItem in reportItems)
-            {
-                var csvHeader = string.Empty;
-                var csvTasks = string.Empty;
-
-                csvHeader += "Date" + Seperator;
-                csvTasks += reportItem.Date + Seperator;
-
-                foreach (TaskItem item in reportItem.TaskItems)
-                {
-                    csvHeader += item.TaskName + Seperator;
-                    csvTasks += item.DailyTime + Seperator;
-                }
-                csvHeader += "\n";
-                csvTasks += "\n";
-
-                finalCsv += csvHeader + csvTasks + "\n";
-            }
-
-            const string ReportallCsvFileName = "ReportAll.csv";
-            if (File.Exists(ReportallCsvFileName))
-            {
-                File.Delete(ReportallCsvFileName);
-            }
-
-            using (var file = new StreamWriter(ReportallCsvFileName))
-            {
-                file.WriteLine(finalCsv);
-                file.Close();
-            }
-        }
-
         private void weeklyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var reportForm = new ReportForm();
