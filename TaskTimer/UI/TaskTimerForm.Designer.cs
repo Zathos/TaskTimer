@@ -43,7 +43,9 @@
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.weeklyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToCsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToCSVGroupedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.archiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.archiveWeekToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.TaskDataGrid)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -148,7 +150,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.reportToolStripMenuItem});
+            this.reportToolStripMenuItem,
+            this.archiveToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(457, 24);
@@ -174,7 +177,7 @@
             // 
             this.reportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.weeklyToolStripMenuItem,
-            this.exportToCsvToolStripMenuItem});
+            this.exportToCSVGroupedToolStripMenuItem});
             this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
             this.reportToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.reportToolStripMenuItem.Text = "Report";
@@ -186,12 +189,27 @@
             this.weeklyToolStripMenuItem.Text = "Weekly";
             this.weeklyToolStripMenuItem.Click += new System.EventHandler(this.weeklyToolStripMenuItem_Click);
             // 
-            // exportToCsvToolStripMenuItem
+            // exportToCSVGroupedToolStripMenuItem
             // 
-            this.exportToCsvToolStripMenuItem.Name = "exportToCsvToolStripMenuItem";
-            this.exportToCsvToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exportToCsvToolStripMenuItem.Text = "Export To CSV";
-            this.exportToCsvToolStripMenuItem.Click += new System.EventHandler(this.exportToCsvToolStripMenuItem_Click);
+            this.exportToCSVGroupedToolStripMenuItem.Name = "exportToCSVGroupedToolStripMenuItem";
+            this.exportToCSVGroupedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportToCSVGroupedToolStripMenuItem.Text = "Export To CSV";
+            this.exportToCSVGroupedToolStripMenuItem.Click += new System.EventHandler(this.exportToCsvToolStripMenuItem_Click);
+            // 
+            // archiveToolStripMenuItem
+            // 
+            this.archiveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.archiveWeekToolStripMenuItem});
+            this.archiveToolStripMenuItem.Name = "archiveToolStripMenuItem";
+            this.archiveToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.archiveToolStripMenuItem.Text = "Archive";
+            // 
+            // archiveWeekToolStripMenuItem
+            // 
+            this.archiveWeekToolStripMenuItem.Name = "archiveWeekToolStripMenuItem";
+            this.archiveWeekToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.archiveWeekToolStripMenuItem.Text = "Week";
+            this.archiveWeekToolStripMenuItem.Click += new System.EventHandler(this.archiveWeekToolStripMenuItem_Click);
             // 
             // TaskTimerForm
             // 
@@ -231,7 +249,9 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn Active;
         private System.Windows.Forms.DataGridViewTextBoxColumn ActiveSeconds;
         private System.Windows.Forms.DataGridViewTextBoxColumn ActivatedCount;
-        private System.Windows.Forms.ToolStripMenuItem exportToCsvToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportToCSVGroupedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem archiveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem archiveWeekToolStripMenuItem;
 
     }
 }

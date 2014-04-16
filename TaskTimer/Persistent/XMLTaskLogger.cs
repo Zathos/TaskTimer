@@ -15,7 +15,7 @@ namespace TaskTimer.Persistent
         public IList<ReportTaskItem> LoadAllTasks()
         {
             var fileNames = Directory.EnumerateFiles(".", "*.xml");
-            List<ReportTaskItem> list = new List<ReportTaskItem>();
+            var list = new List<ReportTaskItem>();
             foreach (string fileName in fileNames)
             {
                 IList<TaskItem> tasks = LoadTaskListByFileName(fileName);
@@ -98,9 +98,10 @@ namespace TaskTimer.Persistent
         {
             string taskNames = taskItems.Aggregate(string.Empty, (current, taskItem) => current + (taskItem.TaskName + ","));
             taskNames = taskNames.Substring(0, taskNames.Length - 1);
-            using (TextWriter writer = new StreamWriter(MasterTaskListFile))
+            using (TextWriter file = new StreamWriter(MasterTaskListFile))
             {
-                writer.WriteLine(taskNames);
+                file.WriteLine(taskNames);
+                file.Close();
             }
         }
     }

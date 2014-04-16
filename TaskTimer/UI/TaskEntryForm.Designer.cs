@@ -72,16 +72,17 @@
             // 
             // TaskEntryForm
             // 
-            this.AcceptButton = OkButton;
+            this.AcceptButton = this.OkButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = CancelTaskButton;
+            this.CancelButton = this.CancelTaskButton;
             this.ClientSize = new System.Drawing.Size(284, 79);
             this.Controls.Add(this.CancelTaskButton);
             this.Controls.Add(this.OkButton);
             this.Controls.Add(this.TaskNameBox);
             this.Controls.Add(this.label1);
             this.Name = "TaskEntryForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "TaskEntryForm";
             this.ResumeLayout(false);
             this.PerformLayout();
