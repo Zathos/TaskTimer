@@ -1,21 +1,19 @@
-﻿using System;
+﻿using System.Xml.Serialization;
 using TaskTimer.Properties;
 
 namespace TaskTimer.POCOs
 {
     public class TaskItem
     {
-        private readonly TimeFormatter _timeFormatter;
-        private int _activeSeconds;
-
         public TaskItem()
         {
             _timeFormatter = new TimeFormatter();
         }
 
-        public bool Active { get; set; }
-
         public int ActivatedCount { get; set; }
+
+        [XmlIgnore]
+        public bool Active { get; set; }
 
         public int ActiveSeconds
         {
@@ -27,7 +25,7 @@ namespace TaskTimer.POCOs
             }
         }
 
-        [NotNull]
+        [NotNull,XmlIgnore]
         public string DailyTime
         {
             get { return _timeFormatter.ToString(); }
@@ -36,5 +34,8 @@ namespace TaskTimer.POCOs
 
         [NotNull]
         public string TaskName { get; set; }
+
+        private readonly TimeFormatter _timeFormatter;
+        private int _activeSeconds;
     }
 }

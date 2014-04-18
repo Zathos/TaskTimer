@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using TaskTimer.Persistent;
 using TaskTimer.POCOs;
@@ -116,7 +115,7 @@ namespace TaskTimer.UI
 
             _taskTimer.AddNewTask(newTaskForm.TaskName);
 
-            //TODO why doesn't this actually refresh, it works in other places.
+            //TODO why doesn't this actually refresh, it works in other places. Different thread?
             RefreshDataSource();
         }
 
@@ -137,7 +136,6 @@ namespace TaskTimer.UI
 
         private void RefreshTimerOnTick([CanBeNull] object sender, [CanBeNull] EventArgs eventArgs)
         {
-            //TODO need to accumulate the time before refreshing the data.
             _taskTimer.AccumulateTimeForActiveTask();
             RefreshDataSource();
         }
@@ -186,14 +184,12 @@ namespace TaskTimer.UI
                 foreach (TaskItem task in reportItem.TaskItems)
                 {
                     int headerIndex = FindHeaderIndex(header, task.TaskName);
-                    AddTaskToPaddedTaskItems(headerIndex-1, paddedTaskItems, task.DailyTime);
+                    AddTaskToPaddedTaskItems(headerIndex - 1, paddedTaskItems, task.DailyTime);
                 }
                 fileToGenerate[reportItem.Date] = paddedTaskItems;
             }
 
             WriteReportToFile(header, fileToGenerate);
-
-            //MessageBox.Show("Done generating report.", "Done", MessageBoxButtons.OK);
         }
 
         private void weeklyToolStripMenuItem_Click(object sender, EventArgs e)
