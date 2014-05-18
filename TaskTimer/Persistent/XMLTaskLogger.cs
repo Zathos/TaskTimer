@@ -12,6 +12,11 @@ namespace TaskTimer.Persistent
     {
         private const string MasterTaskListFile = "MasterTaskList.txt";
 
+        public IEnumerable<string> LoadAllTaskFileNames()
+        {
+            return Directory.EnumerateFiles(".", "*.xml");
+        }
+
         public IList<ReportTaskItem> LoadAllTasks()
         {
             var fileNames = Directory.EnumerateFiles(".", "*.xml");

@@ -11,6 +11,8 @@ namespace TaskTimer.UI
 {
     public partial class TaskTimerForm : Form
     {
+        private const string ReportallCsvFileName = "ReportAllGrouped.csv";
+
         public TaskTimerForm([NotNull] ITaskTimerModel taskTimer)
         {
             InitializeComponent();
@@ -18,8 +20,8 @@ namespace TaskTimer.UI
             _taskTimer = taskTimer;
             _taskTimer.PropertyChanged += TaskTimerOnPropertyChanged;
 
-            TaskDataGrid.Resize += OutputList_Resize;
-            OutputList_Resize(null, null);
+            TaskDataGrid.Resize += OutputListResize;
+            OutputListResize(null, null);
 
             RefreshDataSource();
             _refreshTimer = new Timer
@@ -65,6 +67,22 @@ namespace TaskTimer.UI
             return header.Count - 1;
         }
 
+        private DateTime GetLastSunday()
+        {
+            var now = DateTime.Now;
+            var lastSunday = now.DayOfWeek - DayOfWeek.Sunday;
+            if (lastSunday < 0)
+            {
+                lastSunday += 7;
+            }
+            return now.AddDays(-lastSunday);
+        }
+
+        private void OpenReportFile()
+        {
+            System.Diagnostics.Process.Start(ReportallCsvFileName);
+        }
+
         private void RefreshDataSource()
         {
             TaskDataGrid.DataSource = _taskTimer.TaskItems;
@@ -73,7 +91,6 @@ namespace TaskTimer.UI
 
         private void WriteReportToFile(IEnumerable<string> header, Dictionary<string, List<string>> fileToGenerate)
         {
-            const string ReportallCsvFileName = "ReportAllGrouped.csv";
             if (File.Exists(ReportallCsvFileName))
             {
                 File.Delete(ReportallCsvFileName);
@@ -108,7 +125,7 @@ namespace TaskTimer.UI
             }
         }
 
-        private void AddTaskButton_Click([CanBeNull] object sender, [CanBeNull] EventArgs e)
+        private void AddTaskButtonClick([CanBeNull] object sender, [CanBeNull] EventArgs e)
         {
             var newTaskForm = new TaskEntryForm();
             newTaskForm.ShowDialog();
@@ -119,44 +136,19 @@ namespace TaskTimer.UI
             RefreshDataSource();
         }
 
-        private void OnFormClosing([CanBeNull] object sender, [CanBeNull] FormClosingEventArgs formClosingEventArgs)
+        private void ArchiveWeekToolStripMenuItemClick(object sender, EventArgs e)
         {
-            CloseAction();
-        }
+            var xmlLoader = new XmlTaskLogger();
+            var fileNames = xmlLoader.LoadAllTaskFileNames();
+            var lastSunday = GetLastSunday();
 
-        private void OutputList_Resize([CanBeNull] object sender, [CanBeNull] EventArgs e)
-        {
-            const int Adjustment = 11;
-            var numberOfColumns = TaskDataGrid.Columns.Count;
-            for (int i = 0; i < numberOfColumns; i++)
-            {
-                TaskDataGrid.Columns[i].Width = (TaskDataGrid.Size.Width / numberOfColumns) - Adjustment;
-            }
-        }
+            //remove any file created after last sunday from the list
+            
 
-        private void RefreshTimerOnTick([CanBeNull] object sender, [CanBeNull] EventArgs eventArgs)
-        {
-            _taskTimer.AccumulateTimeForActiveTask();
-            RefreshDataSource();
-        }
+            //loop over list
+            //   put each file in year(4)/month (name)
 
-        private void RemoveTaskButton_Click([NotNull] object sender, [CanBeNull] EventArgs e)
-        {
-            //TODO confirm removal of task
 
-            //TODO remove task from list and menu option
-            //var selectedRows = TaskDataGrid.SelectedRows;
-
-            //TODO task is removed from Master List
-        }
-
-        private void TaskTimerOnPropertyChanged([CanBeNull] object sender, [NotNull] PropertyChangedEventArgs e)
-        {
-            RefreshDataSource();
-        }
-
-        private void archiveWeekToolStripMenuItem_Click(object sender, EventArgs e)
-        {
             //TODO verify/create the folder structure
             //TODO move files to matching year/month.
 
@@ -164,12 +156,12 @@ namespace TaskTimer.UI
             MessageBox.Show("Not Implemented. Will archive anything older then a week.", "Archive", MessageBoxButtons.OK);
         }
 
-        private void closeToolStripMenuItem_Click([CanBeNull] object sender, [CanBeNull] EventArgs e)
+        private void CloseToolStripMenuItemClick([CanBeNull] object sender, [CanBeNull] EventArgs e)
         {
             Close();
         }
 
-        private void exportToCsvToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExportToCsvToolStripMenuItemClick(object sender, EventArgs e)
         {
             var xmlLoader = new XmlTaskLogger();
             IList<ReportTaskItem> reportItems = xmlLoader.LoadAllTasks();
@@ -190,9 +182,47 @@ namespace TaskTimer.UI
             }
 
             WriteReportToFile(header, fileToGenerate);
+
+            OpenReportFile();
         }
 
-        private void weeklyToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OnFormClosing([CanBeNull] object sender, [CanBeNull] FormClosingEventArgs formClosingEventArgs)
+        {
+            CloseAction();
+        }
+
+        private void OutputListResize([CanBeNull] object sender, [CanBeNull] EventArgs e)
+        {
+            const int Adjustment = 11;
+            var numberOfColumns = TaskDataGrid.Columns.Count;
+            for (int i = 0; i < numberOfColumns; i++)
+            {
+                TaskDataGrid.Columns[i].Width = (TaskDataGrid.Size.Width / numberOfColumns) - Adjustment;
+            }
+        }
+
+        private void RefreshTimerOnTick([CanBeNull] object sender, [CanBeNull] EventArgs eventArgs)
+        {
+            _taskTimer.AccumulateTimeForActiveTask();
+            RefreshDataSource();
+        }
+
+        private void RemoveTaskButtonClick([NotNull] object sender, [CanBeNull] EventArgs e)
+        {
+            //TODO confirm removal of task
+
+            //TODO remove task from list and menu option
+            //var selectedRows = TaskDataGrid.SelectedRows;
+
+            //TODO task is removed from Master List
+        }
+
+        private void TaskTimerOnPropertyChanged([CanBeNull] object sender, [NotNull] PropertyChangedEventArgs e)
+        {
+            RefreshDataSource();
+        }
+
+        private void WeeklyToolStripMenuItemClick(object sender, EventArgs e)
         {
             var reportForm = new ReportForm();
             reportForm.ShowDialog();

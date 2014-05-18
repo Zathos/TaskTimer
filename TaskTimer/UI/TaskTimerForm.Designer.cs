@@ -114,7 +114,7 @@
             this.AddTaskButton.TabIndex = 1;
             this.AddTaskButton.Text = "Add Task";
             this.AddTaskButton.UseVisualStyleBackColor = true;
-            this.AddTaskButton.Click += new System.EventHandler(this.AddTaskButton_Click);
+            this.AddTaskButton.Click += new System.EventHandler(this.AddTaskButtonClick);
             // 
             // RemoveTaskButton
             // 
@@ -124,7 +124,7 @@
             this.RemoveTaskButton.TabIndex = 2;
             this.RemoveTaskButton.Text = "Remove Task";
             this.RemoveTaskButton.UseVisualStyleBackColor = true;
-            this.RemoveTaskButton.Click += new System.EventHandler(this.RemoveTaskButton_Click);
+            this.RemoveTaskButton.Click += new System.EventHandler(this.RemoveTaskButtonClick);
             // 
             // panel1
             // 
@@ -171,7 +171,7 @@
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.closeToolStripMenuItem.Text = "&Close";
-            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItemClick);
             // 
             // reportToolStripMenuItem
             // 
@@ -187,14 +187,14 @@
             this.weeklyToolStripMenuItem.Name = "weeklyToolStripMenuItem";
             this.weeklyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.weeklyToolStripMenuItem.Text = "Weekly";
-            this.weeklyToolStripMenuItem.Click += new System.EventHandler(this.weeklyToolStripMenuItem_Click);
+            this.weeklyToolStripMenuItem.Click += new System.EventHandler(this.WeeklyToolStripMenuItemClick);
             // 
             // exportToCSVGroupedToolStripMenuItem
             // 
             this.exportToCSVGroupedToolStripMenuItem.Name = "exportToCSVGroupedToolStripMenuItem";
             this.exportToCSVGroupedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exportToCSVGroupedToolStripMenuItem.Text = "Export To CSV";
-            this.exportToCSVGroupedToolStripMenuItem.Click += new System.EventHandler(this.exportToCsvToolStripMenuItem_Click);
+            this.exportToCSVGroupedToolStripMenuItem.Click += new System.EventHandler(this.ExportToCsvToolStripMenuItemClick);
             // 
             // archiveToolStripMenuItem
             // 
@@ -209,7 +209,7 @@
             this.archiveWeekToolStripMenuItem.Name = "archiveWeekToolStripMenuItem";
             this.archiveWeekToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.archiveWeekToolStripMenuItem.Text = "Week";
-            this.archiveWeekToolStripMenuItem.Click += new System.EventHandler(this.archiveWeekToolStripMenuItem_Click);
+            this.archiveWeekToolStripMenuItem.Click += new System.EventHandler(this.ArchiveWeekToolStripMenuItemClick);
             // 
             // TaskTimerForm
             // 
