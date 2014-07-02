@@ -82,7 +82,7 @@
             this.Controls.Add(this.TaskNameBox);
             this.Controls.Add(this.label1);
             this.Name = "TaskEntryForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TaskEntryForm";
             this.ResumeLayout(false);
             this.PerformLayout();

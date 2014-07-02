@@ -11,6 +11,7 @@ namespace TaskTimer.Persistent
     public class XmlTaskLogger : ITaskLogger
     {
         private const string MasterTaskListFile = "MasterTaskList.txt";
+        private const string ReportAllCsvFileName = "ReportAllGrouped.csv";
 
         public IEnumerable<string> LoadAllTaskFileNames()
         {
@@ -52,6 +53,44 @@ namespace TaskTimer.Persistent
                 xmlSerializer.Serialize(writer, taskItems);
                 writer.Close();
             }
+        }
+
+        public void WriteReportToFile(List<string> header, Dictionary<string, List<string>> fileToGenerate)
+        {
+            if (File.Exists(ReportAllCsvFileName))
+            {
+                File.Delete(ReportAllCsvFileName);
+            }
+
+            const string Seperator = ",";
+
+            var outputString = string.Empty;
+            foreach (string activity in header)
+            {
+                outputString += activity + Seperator;
+            }
+            outputString.Substring(0, outputString.Length - 1);
+            outputString += "\n";
+
+            foreach (KeyValuePair<string, List<string>> valuePair in fileToGenerate)
+            {
+                outputString += valuePair.Key + Seperator;
+                foreach (string dailyTime in valuePair.Value)
+                {
+                    outputString += dailyTime + Seperator;
+                }
+                outputString.Substring(0, outputString.Length - 1);
+                outputString += "\n";
+            }
+
+
+            using (var file = new StreamWriter(ReportAllCsvFileName))
+            {
+                file.Write(outputString);
+                file.Close();
+            }
+
+            System.Diagnostics.Process.Start(ReportAllCsvFileName);
         }
 
         [NotNull]

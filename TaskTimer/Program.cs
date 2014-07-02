@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using TaskTimer.Persistent;
-using TaskTimer.Properties;
 
 namespace TaskTimer
 {
-    internal static class TaskTimerMain
+    internal static class Program
     {
         /// <summary>
         /// The main entry point for the application.
@@ -14,9 +13,9 @@ namespace TaskTimer
         private static void Main()
         {
             var taskLogger = new XmlTaskLogger();
-            using(var taskManager = new MenuManager())
+            using (var taskManager = new MenuManager())
             {
-                var t = new TaskTimerModel(taskLogger, taskManager);
+                var t = new TaskTimer(taskLogger, taskManager);
                 Application.Run();
             }
         }
