@@ -82,7 +82,7 @@ namespace TaskTimer
         {
             if (IsNewDay())
             {
-                ResetAllActiveSeconds();
+                ResetAllTasks();
             }
 
             _startTime = now;
@@ -121,11 +121,12 @@ namespace TaskTimer
             return _taskItems.FirstOrDefault(x => x.TaskName == taskName);
         }
 
-        private void ResetAllActiveSeconds()
+        private void ResetAllTasks()
         {
             foreach (TaskItem task in _taskItems)
             {
                 task.ActiveSeconds = 0;
+                task.ActivatedCount = 0;
             }
             _taskLogger.SaveChanges(_taskItems);
         }

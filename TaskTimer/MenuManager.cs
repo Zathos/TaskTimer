@@ -70,9 +70,11 @@ namespace TaskTimer
                                 ContextMenu = new ContextMenu(new[]
                                                                   {
                                                                       new MenuItem("Exit", (s, e) => Application.Exit()),
-                                                                      InitManageTaskMenuItems(),
+                                                                      new MenuItem("-"),
                                                                       new MenuItem("Export to CVS", (s, e) => _exporter.ExportToCsvToolStripMenuItemClick()),
+                                                                      new MenuItem("Open Containing Folder", (s, e) => System.Diagnostics.Process.Start("explorer.exe", @".")),
                                                                       new MenuItem("View Current Tasks", (s, e) => new TaskTimerForm(taskTimer.TaskItems).Show()),
+                                                                      InitManageTaskMenuItems(),
                                                                       new MenuItem("-"),
                                                                       _menuList,
                                                                   }),
