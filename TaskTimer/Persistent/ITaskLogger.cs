@@ -13,5 +13,6 @@ namespace TaskTimer.Persistent
         IList<TaskItem> LoadTaskList();
 
         void SaveChanges([NotNull] IList<TaskItem> taskItems);
+        IList<ReportTaskItem> LoadArchivedTasks();
     }
 }

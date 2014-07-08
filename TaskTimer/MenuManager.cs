@@ -17,7 +17,9 @@ namespace TaskTimer
 
         public MenuManager()
         {
+            //TODO interface these and resolve with unity.
             _exporter = new Exporter();
+            _archiver = new Archiver();
         }
 
         [NotNull]
@@ -71,10 +73,16 @@ namespace TaskTimer
                                                                   {
                                                                       new MenuItem("Exit", (s, e) => Application.Exit()),
                                                                       new MenuItem("-"),
-                                                                      new MenuItem("Export to CVS", (s, e) => _exporter.ExportToCsvToolStripMenuItemClick()),
                                                                       new MenuItem("Open Containing Folder", (s, e) => System.Diagnostics.Process.Start("explorer.exe", @".")),
+                                                                      new MenuItem("Manage Tasks", new[]
+                                                                                                       {
+                                                                                                           new MenuItem("Add", TaskAdd),
+                                                                                                           new MenuItem("Remove", TaskRemove),
+                                                                                                           new MenuItem("Archive", (s, e) => _archiver.ArchiverFiles()), 
+                                                                                                       }),
+                                                                      new MenuItem("View All Tasks", (s, e) => _archiver.OpenArchiveTaskView()),
+                                                                      new MenuItem("View This Weeks Tasks", (s, e) => _exporter.ExportToCsvToolStripMenuItemClick()),
                                                                       new MenuItem("View Current Tasks", (s, e) => new TaskTimerForm(taskTimer.TaskItems).Show()),
-                                                                      InitManageTaskMenuItems(),
                                                                       new MenuItem("-"),
                                                                       _menuList,
                                                                   }),
@@ -115,15 +123,6 @@ namespace TaskTimer
             }
         }
 
-        private MenuItem InitManageTaskMenuItems()
-        {
-            return new MenuItem("Manage Tasks", new[]
-                                                    {
-                                                        new MenuItem("Add", TaskAdd),
-                                                        new MenuItem("Remove", TaskRemove),
-                                                    });
-        }
-
 
         private void MenuItemClicked([NotNull] object sender, [NotNull] EventArgs e)
         {
@@ -155,7 +154,6 @@ namespace TaskTimer
 
         private void TaskAdd(object sender, EventArgs e)
         {
-
             var taskEntryForm = new TaskEntryForm();
 
             if (taskEntryForm.ShowDialog() == DialogResult.OK)
@@ -171,6 +169,7 @@ namespace TaskTimer
         }
 
         private readonly Exporter _exporter;
+        private readonly Archiver _archiver;
 
         private MenuItem _activeMenuItem;
         private bool _isDisposed;

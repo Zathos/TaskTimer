@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using TaskTimer.Constants;
 using TaskTimer.POCOs;
 using TaskTimer.Properties;
 
@@ -10,9 +11,6 @@ namespace TaskTimer.Persistent
 {
     public class XmlTaskLogger : ITaskLogger
     {
-        private const string MasterTaskListFile = "MasterTaskList.txt";
-        private const string ReportAllCsvFileName = "ReportAllGrouped.csv";
-
         public IEnumerable<string> LoadAllTaskFileNames()
         {
             return Directory.EnumerateFiles(".", "*.xml");
@@ -20,15 +18,12 @@ namespace TaskTimer.Persistent
 
         public IList<ReportTaskItem> LoadAllTasks()
         {
-            var fileNames = Directory.EnumerateFiles(".", "*.xml");
-            var list = new List<ReportTaskItem>();
-            foreach (string fileName in fileNames)
-            {
-                IList<TaskItem> tasks = LoadTaskListByFileName(fileName);
-                string date = fileName.Split('.')[1].Substring(1);
-                list.Add(new ReportTaskItem(date, tasks));
-            }
-            return list;
+            return LoadTaskItems(".");
+        }
+
+        public IList<ReportTaskItem> LoadArchivedTasks()
+        {
+            return LoadTaskItems("Logs\\.");
         }
 
         public IList<TaskItem> LoadTaskList()
@@ -57,9 +52,9 @@ namespace TaskTimer.Persistent
 
         public void WriteReportToFile(List<string> header, Dictionary<string, List<string>> fileToGenerate)
         {
-            if (File.Exists(ReportAllCsvFileName))
+            if (File.Exists(Files.ReportAllCsv))
             {
-                File.Delete(ReportAllCsvFileName);
+                File.Delete(Files.ReportAllCsv);
             }
 
             const string Seperator = ",";
@@ -84,26 +79,26 @@ namespace TaskTimer.Persistent
             }
 
 
-            using (var file = new StreamWriter(ReportAllCsvFileName))
+            using (var file = new StreamWriter(Files.ReportAllCsv))
             {
                 file.Write(outputString);
                 file.Close();
             }
 
-            System.Diagnostics.Process.Start(ReportAllCsvFileName);
+            System.Diagnostics.Process.Start(Files.ReportAllCsv);
         }
 
         [NotNull]
         private static IEnumerable<string> GetTaskNames()
         {
             string allTaskNames;
-            if (!File.Exists(MasterTaskListFile))
+            if (!File.Exists(Files.MasterTaskList))
             {
-                var file = File.Create(MasterTaskListFile);
+                var file = File.Create(Files.MasterTaskList);
                 file.Close();
             }
 
-            using (TextReader reader = new StreamReader(MasterTaskListFile))
+            using (TextReader reader = new StreamReader(Files.MasterTaskList))
             {
                 allTaskNames = reader.ReadLine();
                 reader.Close();
@@ -119,6 +114,19 @@ namespace TaskTimer.Persistent
                                                     {
                                                         TaskName = taskName,
                                                     }).ToList();
+        }
+
+        private static IList<ReportTaskItem> LoadTaskItems(string searchPath)
+        {
+            var fileNames = Directory.EnumerateFiles(searchPath, "*.xml");
+            var list = new List<ReportTaskItem>();
+            foreach (string fileName in fileNames)
+            {
+                IList<TaskItem> tasks = LoadTaskListByFileName(fileName);
+                string date = fileName.Split('.')[1].Substring(1);
+                list.Add(new ReportTaskItem(date, tasks));
+            }
+            return list;
         }
 
         private static IList<TaskItem> LoadTaskListByFileName(string fileName)
@@ -142,7 +150,7 @@ namespace TaskTimer.Persistent
         {
             string taskNames = taskItems.Aggregate(string.Empty, (current, taskItem) => current + (taskItem.TaskName + ","));
             taskNames = taskNames.Substring(0, taskNames.Length - 1);
-            using (TextWriter file = new StreamWriter(MasterTaskListFile))
+            using (TextWriter file = new StreamWriter(Files.MasterTaskList))
             {
                 file.WriteLine(taskNames);
                 file.Close();
