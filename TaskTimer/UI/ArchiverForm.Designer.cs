@@ -32,6 +32,8 @@
             this.ActiveTaskGridControl = new DevExpress.XtraGrid.GridControl();
             this.ActiveTaskGrid = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
+            this.ActiveGroupControl = new DevExpress.XtraEditors.GroupControl();
+            this.ArchivedGroupControl = new DevExpress.XtraEditors.GroupControl();
             this.ArchivedGridControl = new DevExpress.XtraGrid.GridControl();
             this.ArchiveGrid = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
@@ -41,6 +43,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ActiveTaskGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
             this.splitContainerControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ActiveGroupControl)).BeginInit();
+            this.ActiveGroupControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ArchivedGroupControl)).BeginInit();
+            this.ArchivedGroupControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ArchivedGridControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ArchiveGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
@@ -52,10 +58,10 @@
             // ActiveTaskGridControl
             // 
             this.ActiveTaskGridControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ActiveTaskGridControl.Location = new System.Drawing.Point(0, 0);
+            this.ActiveTaskGridControl.Location = new System.Drawing.Point(2, 21);
             this.ActiveTaskGridControl.MainView = this.ActiveTaskGrid;
             this.ActiveTaskGridControl.Name = "ActiveTaskGridControl";
-            this.ActiveTaskGridControl.Size = new System.Drawing.Size(385, 511);
+            this.ActiveTaskGridControl.Size = new System.Drawing.Size(381, 488);
             this.ActiveTaskGridControl.TabIndex = 0;
             this.ActiveTaskGridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.ActiveTaskGrid});
@@ -70,22 +76,42 @@
             this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerControl1.Location = new System.Drawing.Point(2, 2);
             this.splitContainerControl1.Name = "splitContainerControl1";
-            this.splitContainerControl1.Panel1.Controls.Add(this.ActiveTaskGridControl);
+            this.splitContainerControl1.Panel1.Controls.Add(this.ActiveGroupControl);
             this.splitContainerControl1.Panel1.Text = "Panel1";
-            this.splitContainerControl1.Panel2.Controls.Add(this.ArchivedGridControl);
+            this.splitContainerControl1.Panel2.Controls.Add(this.ArchivedGroupControl);
             this.splitContainerControl1.Panel2.Text = "Panel2";
             this.splitContainerControl1.Size = new System.Drawing.Size(799, 511);
             this.splitContainerControl1.SplitterPosition = 385;
             this.splitContainerControl1.TabIndex = 1;
             this.splitContainerControl1.Text = "splitContainerControl1";
             // 
+            // ActiveGroupControl
+            // 
+            this.ActiveGroupControl.Controls.Add(this.ActiveTaskGridControl);
+            this.ActiveGroupControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ActiveGroupControl.Location = new System.Drawing.Point(0, 0);
+            this.ActiveGroupControl.Name = "ActiveGroupControl";
+            this.ActiveGroupControl.Size = new System.Drawing.Size(385, 511);
+            this.ActiveGroupControl.TabIndex = 1;
+            this.ActiveGroupControl.Text = "Active Logs";
+            // 
+            // ArchivedGroupControl
+            // 
+            this.ArchivedGroupControl.Controls.Add(this.ArchivedGridControl);
+            this.ArchivedGroupControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ArchivedGroupControl.Location = new System.Drawing.Point(0, 0);
+            this.ArchivedGroupControl.Name = "ArchivedGroupControl";
+            this.ArchivedGroupControl.Size = new System.Drawing.Size(409, 511);
+            this.ArchivedGroupControl.TabIndex = 3;
+            this.ArchivedGroupControl.Text = "Archived Logs";
+            // 
             // ArchivedGridControl
             // 
             this.ArchivedGridControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ArchivedGridControl.Location = new System.Drawing.Point(0, 0);
+            this.ArchivedGridControl.Location = new System.Drawing.Point(2, 21);
             this.ArchivedGridControl.MainView = this.ArchiveGrid;
             this.ArchivedGridControl.Name = "ArchivedGridControl";
-            this.ArchivedGridControl.Size = new System.Drawing.Size(409, 511);
+            this.ArchivedGridControl.Size = new System.Drawing.Size(405, 488);
             this.ArchivedGridControl.TabIndex = 2;
             this.ArchivedGridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.ArchiveGrid});
@@ -131,11 +157,15 @@
             this.Controls.Add(this.panelControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ArchiverForm";
-            this.Text = "Archiver";
+            this.Text = "Log Files";
             ((System.ComponentModel.ISupportInitialize)(this.ActiveTaskGridControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActiveTaskGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
             this.splitContainerControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ActiveGroupControl)).EndInit();
+            this.ActiveGroupControl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ArchivedGroupControl)).EndInit();
+            this.ArchivedGroupControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ArchivedGridControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ArchiveGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
@@ -156,5 +186,7 @@
         private DevExpress.XtraEditors.PanelControl panelControl1;
         private DevExpress.XtraEditors.SimpleButton ExitButton;
         private DevExpress.XtraEditors.PanelControl panelControl2;
+        private DevExpress.XtraEditors.GroupControl ActiveGroupControl;
+        private DevExpress.XtraEditors.GroupControl ArchivedGroupControl;
     }
 }

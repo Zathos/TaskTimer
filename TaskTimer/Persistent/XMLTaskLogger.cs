@@ -11,19 +11,19 @@ namespace TaskTimer.Persistent
 {
     public class XmlTaskLogger : ITaskLogger
     {
-        public IEnumerable<string> LoadAllTaskFileNames()
+        public IEnumerable<string> LoadActiveTaskFileNames()
         {
-            return Directory.EnumerateFiles(".", "*.xml");
+            return Directory.EnumerateFiles(Directories.Current, "*.xml");
         }
 
         public IList<ReportTaskItem> LoadAllTasks()
         {
-            return LoadTaskItems(".");
+            return LoadTaskItems(Directories.Current);
         }
 
         public IList<ReportTaskItem> LoadArchivedTasks()
         {
-            return LoadTaskItems("Logs\\.");
+            return LoadTaskItems(Directories.ArchiveLogs + "\\" + Directories.Current);
         }
 
         public IList<TaskItem> LoadTaskList()

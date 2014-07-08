@@ -6,13 +6,13 @@ namespace TaskTimer.Persistent
 {
     public interface ITaskLogger
     {
-        IEnumerable<string> LoadAllTaskFileNames();
+        IEnumerable<string> LoadActiveTaskFileNames();
         IList<ReportTaskItem> LoadAllTasks();
+        IList<ReportTaskItem> LoadArchivedTasks();
 
         [NotNull]
         IList<TaskItem> LoadTaskList();
 
         void SaveChanges([NotNull] IList<TaskItem> taskItems);
-        IList<ReportTaskItem> LoadArchivedTasks();
     }
 }
