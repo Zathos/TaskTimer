@@ -27,7 +27,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskTimerForm));
             this.TaskDataGrid = new System.Windows.Forms.DataGridView();
             this.TaskName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -35,7 +34,6 @@
             this.Active = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ActiveSeconds = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ActivatedCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UpdateTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.TaskDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -93,11 +91,6 @@
             this.ActivatedCount.Name = "ActivatedCount";
             this.ActivatedCount.ReadOnly = true;
             // 
-            // UpdateTimer
-            // 
-            this.UpdateTimer.Interval = 5000;
-            this.UpdateTimer.Tick += new System.EventHandler(this.UpdateTimerTick);
-            // 
             // TaskTimerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -120,7 +113,6 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn Active;
         private System.Windows.Forms.DataGridViewTextBoxColumn ActiveSeconds;
         private System.Windows.Forms.DataGridViewTextBoxColumn ActivatedCount;
-        private System.Windows.Forms.Timer UpdateTimer;
 
     }
 }
