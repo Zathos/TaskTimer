@@ -70,6 +70,7 @@
             // 
             this.ActiveTaskGrid.GridControl = this.ActiveTaskGridControl;
             this.ActiveTaskGrid.Name = "ActiveTaskGrid";
+            this.ActiveTaskGrid.OptionsView.ShowFooter = true;
             // 
             // splitContainerControl1
             // 
@@ -120,6 +121,7 @@
             // 
             this.ArchiveGrid.GridControl = this.ArchivedGridControl;
             this.ArchiveGrid.Name = "ArchiveGrid";
+            this.ArchiveGrid.OptionsView.ShowFooter = true;
             // 
             // panelControl1
             // 

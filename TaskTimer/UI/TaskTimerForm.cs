@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Windows.Forms;
-using TaskTimer.POCOs;
+﻿using System.Windows.Forms;
 using TaskTimer.Properties;
 
 namespace TaskTimer.UI
 {
     public partial class TaskTimerForm : Form
     {
-        public TaskTimerForm([NotNull] IList<TaskItem> taskItems)
+        public TaskTimerForm([NotNull] TaskTimer taskTimer)
         {
             InitializeComponent();
-            TaskDataGrid.DataSource = taskItems;
+            TaskDataGrid.DataSource = taskTimer.TaskItems;
+            taskTimer.AccumulateTimeForActiveTask();
         }
     }
 }
